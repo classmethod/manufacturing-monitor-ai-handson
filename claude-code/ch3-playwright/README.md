@@ -88,13 +88,14 @@ Microsoft が提供するブラウザ自動操作のCLIツールです。以下�
 ### 0.1. playwright-cliのインストール
 
 ```bash
-npm install -g @playwright/cli@0.1.9
+pnpm add -g @playwright/cli@0.1.22
+playwright-cli install-browser chromium --with-deps
 ```
 
 ### 0.2. ffmpegのインストール（動画録画に必要）
 
 ```bash
-npx playwright install ffmpeg
+playwright-cli install-browser ffmpeg
 ```
 
 ### 0.3. アプリケーションの起動

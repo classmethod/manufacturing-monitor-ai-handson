@@ -64,7 +64,7 @@ Microsoftが提供するブラウザ自動操作のCLIツールです。以下�
 ### 0.1. playwright-cliのインストール
 
 ```bash
-npm install -g @playwright/cli@0.1.9
+npm install -g @playwright/cli@0.1.22
 ```
 
 ### 0.2. ffmpegのインストール（動画録画に必要）

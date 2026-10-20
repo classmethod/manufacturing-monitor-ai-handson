@@ -19,11 +19,10 @@
 | [uv](https://docs.astral.sh/uv/)                                      | 0.11       | Astral                     | 全章: Pythonパッケージ管理・タスク実行       |
 | [Claude Code](https://docs.claude.com/en/docs/claude-code/quickstart) | 2.1.119    | Anthropic                  | 全章: AIコーディングエージェント             |
 | [SQLite3](https://www.sqlite.org/)                                    | 3.x        | SQLite Consortium          | 全章: DBレコード確認                         |
-| [AWS CLI](https://aws.amazon.com/cli/)                                | 2.x        | AWS                        | 全章: AWS リソース操作                       |
 | [spec-kit](https://github.com/github/spec-kit)                        | 0.8.0      | GitHub                     | ch1: Spec駆動スキル導入                      |
 | [Node.js](https://nodejs.org/)                                        | 22         | OpenJS Foundation          | ch3-playwright: playwright CLI の実行        |
 | [pnpm](https://pnpm.io/)                                              | 10.33.2    | pnpm                       | ch3-playwright: Node パッケージマネージャ    |
-| [playwright-cli](https://github.com/microsoft/playwright-cli)         | 0.1.9      | Microsoft                  | ch3-playwright: ブラウザ自動操作             |
+| [playwright-cli](https://github.com/microsoft/playwright-cli)         | 0.1.22     | Microsoft                  | ch3-playwright: ブラウザ自動操作             |
 | [GitHub CLI](https://cli.github.com/)                                 | 2.90.0     | GitHub                     | ch3-skill-creator: `gh skill` で Skills 導入 |
 
 ## インストール手順
@@ -75,7 +74,7 @@ uv --version
 ### 3. Node.js
 
 ```bash
-# macOS (Homebrew)
+# macOS / Linux
 brew install node
 ```
 
@@ -127,7 +126,7 @@ claude
 ### 5. SQLite3
 
 ```bash
-# macOS (プリインストール済みの場合あり)
+# macOS / Linux (プリインストール済みの場合あり)
 sqlite3 --version
 ```
 
@@ -140,42 +139,7 @@ winget install -e --id SQLite.SQLite
 
 </details>
 
-### 6. AWS CLI
-
-AWS CLI v2 系をインストールします（v1 は EOL 済み）。最新の 2.x で問題ありません。
-
-```bash
-# macOS (Homebrew)
-brew install awscli
-```
-
-<details>
-<summary>Windows (CMD / PowerShell)</summary>
-
-```powershell
-winget install -e --id Amazon.AWSCLI
-```
-
-</details>
-
-<details>
-<summary>Linux (公式インストーラ)</summary>
-
-```bash
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-rm -rf awscliv2.zip aws
-```
-
-</details>
-
-```bash
-aws --version
-# aws-cli/2.x.x ... と表示されればOK
-```
-
-### 7. spec-kit
+### 6. spec-kit
 
 2026-04-23 リリースの `v0.8.0` を pin して `specify` CLI を `uv tool` で永続インストールします。
 
@@ -189,7 +153,7 @@ uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v0
 specify --version
 ```
 
-### 8. pnpm
+### 7. pnpm
 
 2026-04-23 リリースの `10.33.2` を pin して公式スタンドアロンスクリプトでインストールします（pnpm 10 は `manage-package-manager-versions` で自己管理するため Corepack 不要）。
 
@@ -214,24 +178,19 @@ pnpm --version
 # 10.33.2 と表示されればOK
 ```
 
-### 9. playwright-cli
+### 8. playwright-cli
 
-`playwright-cli` コマンドを提供する `@playwright/cli` と、ブラウザ／ffmpeg バイナリのインストーラを提供する `playwright` を pnpm でグローバルインストールします。
+`playwright-cli` コマンドを提供する `@playwright/cli` を pnpm でグローバルインストールします。
 
 ```bash
-pnpm add -g @playwright/cli@0.1.9 playwright
+pnpm add -g @playwright/cli@0.1.22
 ```
 
-ブラウザバイナリをインストールします。
+`playwright-cli` から使う Chromium を、OS の依存パッケージ込みでインストールします。動画録画機能を使う場合に備えて、ffmpeg も `install-browser` で追加します。
 
 ```bash
-playwright install
-```
-
-動画録画機能を使う場合は、ffmpeg も追加でインストールします。
-
-```bash
-playwright install ffmpeg
+playwright-cli install-browser chromium --with-deps
+playwright-cli install-browser ffmpeg
 ```
 
 動作確認します。
@@ -240,12 +199,12 @@ playwright install ffmpeg
 playwright-cli --version
 ```
 
-### 10. GitHub CLI
+### 9. GitHub CLI
 
 `gh skill` サブコマンドは Public Preview のため仕様変更の可能性があります。gh 本体を最新化します。
 
 ```bash
-# macOS
+# macOS / Linux
 brew upgrade gh
 ```
 
@@ -297,6 +256,6 @@ gh auth status
 ハンズオン中に OSS / npm パッケージを取り込む箇所では、以下の方針で版を固定し、リリース直後の悪性パッケージ取り込みを避けます。
 
 - **Python ライブラリ**: 各チャプターの `uv.lock` に検証済みバージョンを記録。受講者は `uv sync` で同じ状態を再現できます
-- **npm 経由ツール（playwright-cli 等）**: `@0.1.9` のように **バージョン pin** してインストール
+- **npm 経由ツール（playwright-cli 等）**: `@0.1.22` のように **バージョン pin** してインストール
 - **Anthropic 公式プラグイン（ch3-skill-creator）**: Claude Code 公式マーケットプレイス経由で `/plugin marketplace add anthropics/skills` を登録し、`/plugin install skill-creator@anthropic-agent-skills` で取り込みます。配布元は Anthropic 公式リポジトリ（`anthropics/skills`）に限定され、必要に応じて `anthropics/skills#v1.0.0` のようにタグ指定でバージョン pin 可能です
 - **ベースツール（Python / uv / Node.js / SQLite3 / GitHub CLI / Claude Code）**: 各プロジェクト公式のインストーラ／パッケージマネージャ経由のみを案内（環境差を避けるため厳密な pin は行いません）
