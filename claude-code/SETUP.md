@@ -201,7 +201,8 @@ playwright install ffmpeg
 `playwright-cli` から使う Chromium を、OS の依存パッケージ込みでインストールします。
 
 ```bash
-pnpm exec playwright-cli install-browser chromium --with-deps
+playwright-cli install
+playwright-cli install-browser chromium --with-deps
 ```
 
 動作確認します。
