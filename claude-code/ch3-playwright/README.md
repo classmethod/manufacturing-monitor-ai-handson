@@ -88,7 +88,7 @@ Microsoft が提供するブラウザ自動操作のCLIツールです。以下�
 ### 0.1. playwright-cliのインストール
 
 ```bash
-pnpm add -g @playwright/cli@0.1.9
+pnpm add -g @playwright/cli@0.1.22
 playwright-cli install-browser chromium --with-deps
 ```
 
