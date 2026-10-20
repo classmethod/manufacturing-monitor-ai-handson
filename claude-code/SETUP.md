@@ -74,7 +74,7 @@ uv --version
 ### 3. Node.js
 
 ```bash
-# macOS (Homebrew)
+# macOS / Linux
 brew install node
 ```
 
@@ -126,7 +126,7 @@ claude
 ### 5. SQLite3
 
 ```bash
-# macOS (プリインストール済みの場合あり)
+# macOS / Linux (プリインストール済みの場合あり)
 sqlite3 --version
 ```
 
@@ -183,25 +183,14 @@ pnpm --version
 `playwright-cli` コマンドを提供する `@playwright/cli` と、ブラウザ／ffmpeg バイナリのインストーラを提供する `playwright` を pnpm でグローバルインストールします。
 
 ```bash
-pnpm add -g @playwright/cli@0.1.9 playwright
-```
-
-ブラウザバイナリをインストールします。
-
-```bash
-playwright install
-```
-
-動画録画機能を使う場合は、ffmpeg も追加でインストールします。
-
-```bash
-playwright install ffmpeg
+pnpm add -g @playwright/cli@0.1.9
 ```
 
 `playwright-cli` から使う Chromium を、OS の依存パッケージ込みでインストールします。
 
 ```bash
 playwright-cli install-browser chromium --with-deps
+playwright-cli install-browser ffmpeg
 ```
 
 動作確認します。
@@ -215,7 +204,7 @@ playwright-cli --version
 `gh skill` サブコマンドは Public Preview のため仕様変更の可能性があります。gh 本体を最新化します。
 
 ```bash
-# macOS
+# macOS / Linux
 brew upgrade gh
 ```
 
