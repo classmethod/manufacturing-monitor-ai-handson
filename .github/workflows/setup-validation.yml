@@ -83,6 +83,11 @@ jobs:
           pnpm list -g --depth 0
           pnpm list -g --depth 0 2>&1 | grep -F "@playwright/cli@0.1.9"
 
+      - name: §8 Install Chromium (with deps)
+        run: playwright-cli install-browser chromium --with-deps
+      - name: §8 Install ffmpeg
+        run: playwright-cli install-browser ffmpeg
+
       - name: §9 Install gh CLI (macOS, brew)
         if: runner.os == 'macOS'
         run: brew install gh || brew upgrade gh
@@ -161,6 +166,11 @@ jobs:
           pnpm list -g --depth 0
           $out = pnpm list -g --depth 0 2>&1 | Out-String
           if ($out -notmatch "@playwright/cli@0\.1\.9") { throw "@playwright/cli version mismatch" }
+
+      - name: §8 Install Chromium (with deps)
+        run: playwright-cli install-browser chromium --with-deps
+      - name: §8 Install ffmpeg
+        run: playwright-cli install-browser ffmpeg
 
       - name: §9 Verify gh (pre-installed on runner)
         run: gh --version
