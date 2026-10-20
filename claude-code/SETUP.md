@@ -180,13 +180,13 @@ pnpm --version
 
 ### 8. playwright-cli
 
-`playwright-cli` コマンドを提供する `@playwright/cli` と、ブラウザ／ffmpeg バイナリのインストーラを提供する `playwright` を pnpm でグローバルインストールします。
+`playwright-cli` コマンドを提供する `@playwright/cli` を pnpm でグローバルインストールします。
 
 ```bash
 pnpm add -g @playwright/cli@0.1.9
 ```
 
-`playwright-cli` から使う Chromium を、OS の依存パッケージ込みでインストールします。
+`playwright-cli` から使う Chromium を、OS の依存パッケージ込みでインストールします。動画録画機能を使う場合に備えて、ffmpeg も `install-browser` で追加します。
 
 ```bash
 playwright-cli install-browser chromium --with-deps
