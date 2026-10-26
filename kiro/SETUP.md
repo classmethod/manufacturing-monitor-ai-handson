@@ -7,7 +7,7 @@
 | ツール                             | バージョン | 提供元                     | 用途                             |
 | ---------------------------------- | ---------- | -------------------------- | -------------------------------- |
 | [Python](https://www.python.org/)  | 3.12以上   | Python Software Foundation | アプリケーション実行             |
-| [uv](https://docs.astral.sh/uv/)   | 0.10.4     | Astral                     | Pythonパッケージ管理・タスク実行 |
+| [uv](https://docs.astral.sh/uv/)   | 0.13.5     | Astral                     | Pythonパッケージ管理・タスク実行 |
 | [Kiro](https://kiro.dev/)          | 最新       | Amazon                     | AI駆動開発IDE                    |
 | [SQLite3](https://www.sqlite.org/) | 3.x        | SQLite Consortium          | DBレコード確認                   |
 
@@ -24,15 +24,18 @@
 
 | ライブラリ    | バージョン | ch1 | ch2 | ch3 | ch4 | ch5 | 用途                        |
 | ------------- | ---------- | --- | --- | --- | --- | --- | --------------------------- |
-| streamlit     | >=1.45.0   | ✓   | ✓   | ✓   | ✓   | ✓   | UIフレームワーク            |
-| pandas        | >=2.2.0    | ✓   | ✓   | ✓   | ✓   | ✓   | データフレーム処理          |
-| plotly        | >=6.0.0    | ✓   | ✓   | ✓   | ✓   | ✓   | インタラクティブチャート    |
+| streamlit     | >=1.66.0   | ✓   | ✓   | ✓   | ✓   | ✓   | UIフレームワーク            |
+| pandas        | >=3.0.0    | ✓   | ✓   | ✓   | ✓   | ✓   | データフレーム処理          |
+| plotly        | >=7.0.0    | ✓   | ✓   | ✓   | ✓   | ✓   | インタラクティブチャート    |
 | openpyxl      | >=3.1.0    | ✓   | ✓   | ✓   | ✓   | ✓   | Excel読み込み               |
-| pytest        | >=8.0.0    | ✓   | ✓   | ✓   | ✓   | ✓   | テスト実行                  |
-| ruff          | >=0.11.0   |     |     |     | ✓   | ✓   | リンター・フォーマッター    |
-| torch         | 最新       |     |     |     |     | ✓   | PyTorch（推論バックエンド） |
-| transformers  | 最新       |     |     |     |     | ✓   | Hugging Face Transformers   |
-| sentencepiece | 最新       |     |     |     |     | ✓   | トークナイザー              |
+| pytest        | >=9.1.0    | ✓   | ✓   | ✓   | ✓   | ✓   | テスト実行                  |
+| ruff          | >=0.17.0   |     |     |     | ✓   | ✓   | リンター・フォーマッター    |
+| torch         | >=2.14.0   |     |     |     |     | ✓   | PyTorch（推論バックエンド） |
+| transformers  | >=5.20.0   |     |     |     |     | ✓   | Hugging Face Transformers   |
+| sentencepiece | <0.2.2     |     |     |     |     | ✓   | トークナイザー              |
+
+- sentencepiece は 0.2.2 未満に制限しています。0.2.2 で `SentencePieceProcessor.Init` が削除され、ch5 で使う PLaMo-Embedding のトークナイザーが動作しなくなるためです。
+- torch 2.14 は Python 3.15 向けのパッケージを提供していません。ch5 は Python 3.12〜3.14 で実行してください。
 
 ## インストール手順
 
@@ -58,14 +61,14 @@ python --version
 PowerShellで以下を実行します。
 
 ```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.10.4/install.ps1 | iex"
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.13.5/install.ps1 | iex"
 ```
 
 インストール後、ターミナルを再起動してバージョンを確認します。
 
 ```powershell
 uv --version
-# uv 0.10.4 と表示されればOK
+# uv 0.13.5 と表示されればOK
 ```
 
 ### 3. Kiro

@@ -16,12 +16,12 @@
 | ツール                                                                | バージョン | 提供元                     | 用途                                         |
 | --------------------------------------------------------------------- | ---------- | -------------------------- | -------------------------------------------- |
 | [Python](https://www.python.org/)                                     | 3.12       | Python Software Foundation | 全章: アプリケーション実行                   |
-| [uv](https://docs.astral.sh/uv/)                                      | 0.11       | Astral                     | 全章: Pythonパッケージ管理・タスク実行       |
-| [Claude Code](https://docs.claude.com/en/docs/claude-code/quickstart) | 2.1.119    | Anthropic                  | 全章: AIコーディングエージェント             |
+| [uv](https://docs.astral.sh/uv/)                                      | >=0.13.5   | Astral                     | 全章: Pythonパッケージ管理・タスク実行       |
+| [Claude Code](https://docs.claude.com/en/docs/claude-code/quickstart) | >=2.1.119  | Anthropic                  | 全章: AIコーディングエージェント             |
 | [SQLite3](https://www.sqlite.org/)                                    | 3.x        | SQLite Consortium          | 全章: DBレコード確認                         |
 | [spec-kit](https://github.com/github/spec-kit)                        | 0.8.0      | GitHub                     | ch1: Spec駆動スキル導入                      |
 | [Node.js](https://nodejs.org/)                                        | 22         | OpenJS Foundation          | ch3-playwright: playwright CLI の実行        |
-| [pnpm](https://pnpm.io/)                                              | 10.33.2    | pnpm                       | ch3-playwright: Node パッケージマネージャ    |
+| [pnpm](https://pnpm.io/)                                              | 12.15.0    | pnpm                       | ch3-playwright: Node パッケージマネージャ    |
 | [playwright-cli](https://github.com/microsoft/playwright-cli)         | 0.1.22     | Microsoft                  | ch3-playwright: ブラウザ自動操作             |
 | [GitHub CLI](https://cli.github.com/)                                 | 2.90.0     | GitHub                     | ch3-skill-creator: `gh skill` で Skills 導入 |
 
@@ -47,11 +47,11 @@ python --version
 
 ### 2. uv
 
-2026-04-01 リリースの `0.11.3` を pin してインストールします。
+2026-10-21 リリースの `0.13.5` を pin してインストールします。
 
 ```bash
 # macOS / Linux
-curl -LsSf https://astral.sh/uv/0.11.3/install.sh | sh
+curl -LsSf https://astral.sh/uv/0.13.5/install.sh | sh
 ```
 
 <details>
@@ -59,7 +59,7 @@ curl -LsSf https://astral.sh/uv/0.11.3/install.sh | sh
 
 ```powershell
 # Windows PowerShell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.11.3/install.ps1 | iex"
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.13.5/install.ps1 | iex"
 ```
 
 </details>
@@ -68,7 +68,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.11.3/install.p
 
 ```bash
 uv --version
-# uv 0.11 系以上であればOK
+# uv 0.13.5 以上であればOK
 ```
 
 ### 3. Node.js
@@ -76,6 +76,16 @@ uv --version
 ```bash
 # macOS / Linux
 brew install node
+
+# brewが利用できない場合
+# nvm のインストール（未導入の場合）
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+source ~/.bashrc   # zsh の場合は ~/.zshrc
+
+# 最新の LTS をインストールして切り替え
+nvm install --lts
+nvm use --lts
+nvm alias default 'lts/*'   # 新しいシェルでもこのバージョンを使う
 ```
 
 <details>
@@ -128,6 +138,10 @@ claude
 ```bash
 # macOS / Linux (プリインストール済みの場合あり)
 sqlite3 --version
+
+# Linuxで未インストールの場合
+sudo apt update
+sudo apt install -y sqlite3
 ```
 
 <details>
@@ -155,18 +169,19 @@ specify --version
 
 ### 7. pnpm
 
-2026-04-23 リリースの `10.33.2` を pin して公式スタンドアロンスクリプトでインストールします（pnpm 10 は `manage-package-manager-versions` で自己管理するため Corepack 不要）。
+2026-10-26 リリースの `12.15.0` を pin して公式スタンドアロンスクリプトでインストールします。
+pnpm 12 は `manage-package-manager-versions` で自己管理するため Corepack 不要）
 
 ```bash
 # macOS / Linux
-curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=10.33.2 sh -
+curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.15.0 sh -
 ```
 
 <details>
 <summary>Windows (CMD / PowerShell)</summary>
 
 ```powershell
-powershell -Command "$env:PNPM_VERSION='10.33.2'; Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression"
+powershell -Command "$env:PNPM_VERSION='12.15.0'; Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression"
 ```
 
 </details>
@@ -174,8 +189,11 @@ powershell -Command "$env:PNPM_VERSION='10.33.2'; Invoke-WebRequest https://get.
 動作確認します。
 
 ```bash
+pnpm setup
+source ~/.bashrc
+
 pnpm --version
-# 10.33.2 と表示されればOK
+# 12.15.0 と表示されればOK
 ```
 
 ### 8. playwright-cli
@@ -201,11 +219,29 @@ playwright-cli --version
 
 ### 9. GitHub CLI
 
-`gh skill` サブコマンドは Public Preview のため仕様変更の可能性があります。gh 本体を最新化します。
+skill管理のためにghコマンドを使用します。`gh skill` サブコマンドは Public Preview のため仕様変更の可能性があります。gh 本体を最新化します。
 
 ```bash
 # macOS / Linux
-brew upgrade gh
+brew install gh
+brew upgrade gh # インストール済みの場合こちらのみ実施
+
+# brew が利用できない場合
+# 作業ディレクトリ作成（鍵保存用）
+sudo mkdir -p -m 755 /etc/apt/keyrings
+
+# GitHub CLI の署名鍵を取得してキーリングに保存
+wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+
+# リポジトリを登録
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+  | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+
+# インストール
+sudo apt update
+sudo apt install gh -y
 ```
 
 <details>
@@ -241,15 +277,18 @@ gh auth status
 
 | ライブラリ    | バージョン | ch1 | ch2 | ch3-playwright | ch3-skill-creator | ch4 | ch5 | 用途                        |
 | ------------- | ---------- | --- | --- | -------------- | ----------------- | --- | --- | --------------------------- |
-| streamlit     | >=1.45.0   | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | UIフレームワーク            |
-| pandas        | >=2.2.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | データフレーム処理          |
-| plotly        | >=6.0.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | インタラクティブチャート    |
+| streamlit     | >=1.66.0   | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | UIフレームワーク            |
+| pandas        | >=3.0.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | データフレーム処理          |
+| plotly        | >=7.0.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | インタラクティブチャート    |
 | openpyxl      | >=3.1.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | Excel読み込み               |
-| pytest        | >=8.0.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | テスト実行                  |
-| ruff          | >=0.11.0   |     |     |                |                   | ✓   | ✓   | リンター・フォーマッター    |
-| torch         | 最新       |     |     |                |                   |     | ✓   | PyTorch（推論バックエンド） |
-| transformers  | 最新       |     |     |                |                   |     | ✓   | Hugging Face Transformers   |
-| sentencepiece | 最新       |     |     |                |                   |     | ✓   | トークナイザー              |
+| pytest        | >=9.1.0    | ✓   | ✓   | ✓              | ✓                 | ✓   | ✓   | テスト実行                  |
+| ruff          | >=0.17.0   |     |     |                |                   | ✓   | ✓   | リンター・フォーマッター    |
+| torch         | >=2.14.0   |     |     |                |                   |     | ✓   | PyTorch（推論バックエンド） |
+| transformers  | >=5.20.0   |     |     |                |                   |     | ✓   | Hugging Face Transformers   |
+| sentencepiece | <0.2.2     |     |     |                |                   |     | ✓   | トークナイザー              |
+
+- sentencepiece は 0.2.2 未満に制限しています。0.2.2 で `SentencePieceProcessor.Init` が削除され、ch5 で使う PLaMo-Embedding のトークナイザーが動作しなくなるためです。
+- torch 2.14 は Python 3.15 向けのパッケージを提供していません。ch5 は Python 3.12〜3.14 で実行してください。
 
 ## 付録: サプライチェーンセキュリティ方針
 
@@ -257,5 +296,9 @@ gh auth status
 
 - **Python ライブラリ**: 各チャプターの `uv.lock` に検証済みバージョンを記録。受講者は `uv sync` で同じ状態を再現できます
 - **npm 経由ツール（playwright-cli 等）**: `@0.1.22` のように **バージョン pin** してインストール
-- **Anthropic 公式プラグイン（ch3-skill-creator）**: Claude Code 公式マーケットプレイス経由で `/plugin marketplace add anthropics/skills` を登録し、`/plugin install skill-creator@anthropic-agent-skills` で取り込みます。配布元は Anthropic 公式リポジトリ（`anthropics/skills`）に限定され、必要に応じて `anthropics/skills#v1.0.0` のようにタグ指定でバージョン pin 可能です
-- **ベースツール（Python / uv / Node.js / SQLite3 / GitHub CLI / Claude Code）**: 各プロジェクト公式のインストーラ／パッケージマネージャ経由のみを案内（環境差を避けるため厳密な pin は行いません）
+- **Anthropic 公式プラグイン（ch3-skill-creator）**:
+  - Claude Code 公式マーケットプレイス経由で `/plugin marketplace add anthropics/skills` を登録
+  - `/plugin install skill-creator@anthropic-agent-skills` で取り込みます
+  - 配布元は Anthropic 公式リポジトリ（`anthropics/skills`）に限定され、必要に応じて `anthropics/skills#v1.0.0` のようにタグ指定でバージョン pin 可能です
+- **ベースツール（Python / uv / Node.js / SQLite3 / GitHub CLI / Claude Code）**:
+  - 各プロジェクト公式のインストーラ／パッケージマネージャ経由のみを案内（環境差を避けるため厳密な pin は行いません）
