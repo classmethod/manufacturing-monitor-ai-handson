@@ -169,8 +169,8 @@ specify --version
 
 ### 7. pnpm
 
-2026-10-26 リリースの `12.15.0` を pin して公式スタンドアロンスクリプトでインストールします。
-pnpm 12 は `manage-package-manager-versions` で自己管理するため Corepack 不要）
+2026-10-21 リリースの `12.15.0` を pin して公式スタンドアロンスクリプトでインストールします。
+pnpm 12 は `manage-package-manager-versions` で自己管理するため Corepack 不要
 
 ```bash
 # macOS / Linux
