@@ -28,12 +28,12 @@ jobs:
 
       - name: §2 Install uv
         run: |
-          curl -LsSf https://astral.sh/uv/0.11.3/install.sh | sh
+          curl -LsSf https://astral.sh/uv/0.13.5/install.sh | sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-      - name: §2 Verify uv (must be 0.11.3)
+      - name: §2 Verify uv (must be 0.13.5)
         run: |
           uv --version
-          test "$(uv --version | awk '{print $2}')" = "0.11.3"
+          test "$(uv --version | awk '{print $2}')" = "0.13.5"
 
       - name: §3 Install Node.js (macOS, brew)
         if: runner.os == 'macOS'
@@ -63,18 +63,18 @@ jobs:
 
       - name: §7 Install pnpm
         run: |
-          curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=10.33.2 sh -
+          curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.15.0 sh -
           if [ "$RUNNER_OS" = "macOS" ]; then
             PNPM_HOME="$HOME/Library/pnpm"
           else
             PNPM_HOME="$HOME/.local/share/pnpm"
           fi
           echo "PNPM_HOME=$PNPM_HOME" >> "$GITHUB_ENV"
-          echo "$PNPM_HOME" >> "$GITHUB_PATH"
-      - name: §7 Verify pnpm (must be 10.33.2)
+          echo "$PNPM_HOME/bin" >> "$GITHUB_PATH"
+      - name: §7 Verify pnpm (must be 12.15.0)
         run: |
           pnpm --version
-          test "$(pnpm --version)" = "10.33.2"
+          test "$(pnpm --version)" = "12.15.0"
 
       - name: §8 Install playwright-cli
         run: pnpm add -g "@playwright/cli@0.1.22"
@@ -112,20 +112,20 @@ jobs:
         shell: pwsh
         run: |
           Add-Content -Path $env:GITHUB_PATH -Value "$env:USERPROFILE\.local\bin"
-          Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\pnpm"
+          Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\pnpm\bin"
           Add-Content -Path $env:GITHUB_ENV -Value "PNPM_HOME=$env:LOCALAPPDATA\pnpm"
 
       - name: §1 Python --version
         run: python --version
 
       - name: §2 Install uv
-        run: powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.11.3/install.ps1 | iex"
-      - name: §2 Verify uv (must be 0.11.3)
+        run: powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.13.5/install.ps1 | iex"
+      - name: §2 Verify uv (must be 0.13.5)
         shell: pwsh
         run: |
           uv --version
           $ver = (uv --version).Trim().Split(' ')[1]
-          if ($ver -ne "0.11.3") { throw "uv version mismatch: $ver" }
+          if ($ver -ne "0.13.5") { throw "uv version mismatch: $ver" }
 
       - name: §3 Verify Node.js (pre-installed on runner)
         run: node --version
@@ -150,13 +150,13 @@ jobs:
       - name: §7 Install pnpm
         shell: pwsh
         run: |
-          $env:PNPM_VERSION = '10.33.2'
+          $env:PNPM_VERSION = '12.15.0'
           Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
-      - name: §7 Verify pnpm (must be 10.33.2)
+      - name: §7 Verify pnpm (must be 12.15.0)
         shell: pwsh
         run: |
           pnpm --version
-          if ((pnpm --version).Trim() -ne "10.33.2") { throw "pnpm version mismatch" }
+          if ((pnpm --version).Trim() -ne "12.15.0") { throw "pnpm version mismatch" }
 
       - name: §8 Install playwright-cli
         run: pnpm add -g "@playwright/cli@0.1.22"

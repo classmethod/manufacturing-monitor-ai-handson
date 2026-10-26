@@ -4,19 +4,20 @@ version = "0.1.0"
 description = "ch5: PLaMo Embedding - 意味類似検索"
 requires-python = ">=3.12"
 dependencies = [
-    "streamlit>=1.45.0",
-    "pandas>=2.2.0",
-    "plotly>=6.0.0",
+    "streamlit>=1.66.0",
+    "pandas>=3.0.0",
+    "plotly>=7.0.0",
     "openpyxl>=3.1.0",
-    "torch",
-    "transformers",
-    "sentencepiece",
+    "torch>=2.14.0",
+    "transformers>=5.20.0",
+    # PLaMo-Embedding のトークナイザーが 0.2.2 で削除された SentencePieceProcessor.Init を使うため
+    "sentencepiece<0.2.2",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.0.0",
-    "ruff>=0.11.0",
+    "pytest>=9.1.0",
+    "ruff>=0.17.0",
 ]
 
 [tool.pytest.ini_options]
